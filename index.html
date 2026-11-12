@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="kn" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ಕೆರೆಹೊಸಹಳ್ಳಿ | Kerehosahalli Village Portal - PIN 577228</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Noto+Sans+Kannada:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        saffron: {
+                            50: '#fff9eb',
+                            100: '#fdf0cc',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                        },
+                        maroon: {
+                            700: '#701a1e',
+                            800: '#581316',
+                            900: '#3d0b0d',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Noto Sans Kannada', 'sans-serif'],
+                        kannada: ['Noto Sans Kannada', 'sans-serif'],
+                        heading: ['Cinzel', 'Noto Sans Kannada', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom animations & diya glow */
+        @keyframes flameGlow {
+            0%, 100% { transform: scale(1) rotate(-1deg); filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.9)); }
+            50% { transform: scale(1.12) rotate(2deg); filter: drop-shadow(0 0 15px rgba(239, 68, 68, 1)); }
+        }
+        .diya-flame {
+            animation: flameGlow 1.2s infinite ease-in-out;
+            transform-origin: bottom center;
+        }
+        .admin-blur-ring {
+            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.4);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #d97706;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="bg-amber-50/40 text-slate-800 font-sans min-h-screen flex flex-col antialiased">
+
+    <!-- TOP ADMIN BAR (Only visible to authenticated Owner) -->
+    <div id="adminTopBar" class="hidden bg-slate-900 text-amber-300 px-4 py-2 sticky top-0 z-50 shadow-md flex-wrap items-center justify-between border-b border-amber-500/40 text-sm">
+        <div class="flex items-center space-x-2 my-1">
+            <span class="inline-flex items-center justify-center w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping"></span>
+            <span class="inline-flex items-center justify-center w-2.5 h-2.5 bg-emerald-500 rounded-full"></span>
+            <span class="font-bold text-white tracking-wide">OWNER / ADMIN MODE ACTIVE</span>
+            <span class="text-xs bg-amber-500/20 px-2 py-0.5 rounded text-amber-200 border border-amber-500/30">PIN: 577228</span>
+        </div>
+        <div class="flex items-center space-x-2 my-1 flex-wrap gap-2">
+            <button onclick="openModal('modalHeaderEdit')" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold px-3 py-1 rounded text-xs transition">
+                <i class="fa-solid fa-pen mr-1"></i> Edit Banner Header
+            </button>
+            <button onclick="openModal('modalAddSection')" class="bg-slate-800 hover:bg-slate-700 border border-amber-500/50 text-amber-200 font-medium px-3 py-1 rounded text-xs transition">
+                <i class="fa-solid fa-plus mr-1"></i> Add Custom Section
+            </button>
+            <button onclick="openModal('modalChangePassword')" class="bg-slate-800 hover:bg-slate-700 border border-amber-500/50 text-amber-200 font-medium px-3 py-1 rounded text-xs transition">
+                <i class="fa-solid fa-key mr-1"></i> Change Admin Password
+            </button>
+            <button onclick="adminLogout()" class="bg-red-700 hover:bg-red-600 text-white font-bold px-3 py-1 rounded text-xs transition">
+                <i class="fa-solid fa-right-from-bracket mr-1"></i> Logout Owner
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN NAVBAR -->
+    <header class="bg-maroon-900 text-amber-100 shadow-xl border-b-4 border-saffron-500 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Logo & Village Title -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-saffron-600 to-amber-300 p-0.5 shadow-lg flex items-center justify-center">
+                        <div class="w-full h-full bg-maroon-900 rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-om text-2xl text-saffron-500"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h1 id="navTitle" class="text-xl sm:text-2xl font-bold font-kannada text-amber-100 tracking-wide">
+                            ಕೆರೆಹೊಸಹಳ್ಳಿ | Kerehosahalli
+                        </h1>
+                        <p id="navSubtitle" class="text-xs text-amber-300/80 font-medium">
+                            Ajjampura / Tarikere Taluk | PIN: 577228
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Nav Links & Auth Button -->
+                <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
+                    <a href="#about" class="hover:text-saffron-400 transition">About Village</a>
+                    <a href="#temples" class="hover:text-saffron-400 transition">Temples</a>
+                    <a href="#gallery" class="hover:text-saffron-400 transition">Gallery</a>
+                    <a href="#community" class="hover:text-saffron-400 transition">Notice Board</a>
+                    <a href="#contacts" class="hover:text-saffron-400 transition">Contacts</a>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <!-- Owner Auth Status / Trigger Button -->
+                    <div id="authBtnContainer">
+                        <button onclick="openModal('modalAdminLogin')" class="bg-saffron-600 hover:bg-saffron-500 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs sm:text-sm shadow-md transition flex items-center space-x-1.5">
+                            <i class="fa-solid fa-user-shield"></i>
+                            <span>Owner Login</span>
+                        </button>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button onclick="toggleMobileMenu()" class="md:hidden text-amber-200 hover:text-white p-2">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-maroon-800 border-t border-amber-600/30 px-4 pt-2 pb-4 space-y-2 text-sm font-medium">
+            <a href="#about" onclick="toggleMobileMenu()" class="block py-2 text-amber-100 hover:text-saffron-400">About Village</a>
+            <a href="#temples" onclick="toggleMobileMenu()" class="block py-2 text-amber-100 hover:text-saffron-400">Temples</a>
+            <a href="#gallery" onclick="toggleMobileMenu()" class="block py-2 text-amber-100 hover:text-saffron-400">Gallery</a>
+            <a href="#community" onclick="toggleMobileMenu()" class="block py-2 text-amber-100 hover:text-saffron-400">Notice Board</a>
+            <a href="#contacts" onclick="toggleMobileMenu()" class="block py-2 text-amber-100 hover:text-saffron-400">Contacts</a>
+        </div>
+    </header>
+
+    <!-- ANNOUNCEMENT BANNER TICKER -->
+    <div class="bg-amber-100 border-b border-amber-300 text-amber-900 px-4 py-2 text-xs sm:text-sm flex items-center justify-between">
+        <div class="flex items-center space-x-3 overflow-hidden max-w-6xl mx-auto w-full">
+            <span class="bg-saffron-600 text-slate-950 font-bold px-2 py-0.5 rounded text-xs uppercase tracking-wider whitespace-nowrap shadow-sm">
+                📢 Announcement
+            </span>
+            <div id="announcementText" class="truncate font-medium text-amber-950">
+                Welcome to the official portal of Kerehosahalli (PIN 577228)! Explore our holy temples and community gallery.
+            </div>
+        </div>
+        <button id="editAnnouncementBtn" onclick="openModal('modalEditAnnouncement')" class="hidden ml-2 text-xs text-saffron-700 font-bold underline whitespace-nowrap">
+            Edit
+        </button>
+    </div>
+
+    <!-- HERO SECTION WITH VIRTUAL DIYA OFFERING -->
+    <section class="relative bg-gradient-to-b from-maroon-900 via-maroon-800 to-amber-900 text-white py-12 px-4 sm:px-6 lg:px-8 shadow-inner overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        
+        <div class="max-w-5xl mx-auto relative z-10 text-center">
+            <!-- Kannada Welcome Banner -->
+            <div class="inline-block bg-amber-500/20 border border-amber-400/40 rounded-full px-4 py-1 mb-4 backdrop-blur-sm text-amber-200 text-xs sm:text-sm font-kannada">
+                ✨ ಕೆರೆಹೊಸಹಳ್ಳಿ ಗ್ರಾಮ ಪೋರ್ಟಲ್‌ಗೆ ಸುಸ್ವಾಗತ ✨
+            </div>
+
+            <h2 id="heroTitle" class="text-3xl sm:text-5xl font-extrabold font-heading text-amber-100 mb-3 tracking-wide drop-shadow-md">
+                Kerehosahalli Village Portal
+            </h2>
+            <p id="heroSubtitle" class="text-base sm:text-xl text-amber-200/90 font-light max-w-3xl mx-auto mb-8">
+                Welcome to our serene village in Chikkamagaluru district. Home to revered shrines, lush agricultural fields, and a proud cultural heritage.
+            </p>
+
+            <!-- VIRTUAL DIYA LIGHTING WIDGET -->
+            <div class="bg-slate-900/70 border border-amber-500/40 rounded-2xl p-6 max-w-xl mx-auto backdrop-blur-md shadow-2xl">
+                <h3 class="text-amber-300 font-semibold text-base mb-1 font-heading">
+                    🪔 Devotional Diya Offering (ವರ್ಚುವಲ್ ದೀಪೋತ್ಸವ)
+                </h3>
+                <p class="text-xs text-amber-200/70 mb-4">
+                    Offer a virtual diya to Shree Jalimaradamma Devi & Shree Bhutheshwara Swami for blessings.
+                </p>
+
+                <div class="flex items-center justify-center space-x-6 my-4">
+                    <!-- Diya Icon & Flame Animation -->
+                    <div class="relative flex flex-col items-center">
+                        <div class="diya-flame w-6 h-8 bg-gradient-to-t from-orange-500 via-amber-400 to-yellow-200 rounded-full mb-[-6px] shadow-lg"></div>
+                        <i class="fa-solid fa-bowl-rice text-4xl text-amber-600 drop-shadow"></i>
+                    </div>
+                    
+                    <div>
+                        <div id="diyaCounter" class="text-3xl sm:text-4xl font-extrabold text-amber-300 tracking-tight">
+                            0
+                        </div>
+                        <div class="text-xs text-amber-200/70">Diyas Offered by Devotees</div>
+                    </div>
+                </div>
+
+                <button onclick="lightDiya()" class="w-full sm:w-auto bg-gradient-to-r from-saffron-500 to-amber-500 hover:from-saffron-600 hover:to-amber-600 text-slate-950 font-bold px-8 py-3 rounded-xl shadow-lg transition transform active:scale-95 flex items-center justify-center mx-auto space-x-2">
+                    <i class="fa-solid fa-fire text-lg"></i>
+                    <span>Light a Diya Now</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16 flex-grow">
+
+        <!-- VILLAGE STATS & ABOUT SECTION -->
+        <section id="about" class="scroll-mt-24">
+            <div class="flex items-center justify-between mb-6 border-b border-amber-200 pb-3">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 font-heading flex items-center gap-2">
+                        <i class="fa-solid fa-map-location-dot text-saffron-600"></i>
+                        About Kerehosahalli (ಕೆರೆಹೊಸಹಳ್ಳಿ)
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-500">Village Highlights & Key Information</p>
+                </div>
+                <button id="editAboutBtn" onclick="openModal('modalEditAbout')" class="hidden bg-amber-100 hover:bg-amber-200 text-amber-900 px-3 py-1.5 rounded-lg text-xs font-bold transition">
+                    <i class="fa-solid fa-pen mr-1"></i> Edit Info
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Info Text Card -->
+                <div class="md:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-amber-100 space-y-4">
+                    <div id="aboutDescription" class="text-slate-700 leading-relaxed text-sm sm:text-base space-y-3">
+                        <p>
+                            <strong>Kerehosahalli</strong> is a vibrant and peaceful village located in the Ajjampura / Tarikere Taluk region of Chikkamagaluru district, Karnataka (Postal PIN Code: <strong>577228</strong>).
+                        </p>
+                        <p>
+                            Known for its rich spiritual tradition, close-knit community life, and agricultural heritage, Kerehosahalli is blessed with divine grace from local deities. The village comes alive during annual temple festivals and cultural gatherings where families from across the state gather.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Key Details Grid -->
+                <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200/60 shadow-sm flex flex-col justify-between">
+                    <h3 class="font-bold text-amber-950 text-base mb-4 border-b border-amber-200 pb-2">
+                        📌 Quick Details
+                    </h3>
+                    <ul class="space-y-3 text-xs sm:text-sm text-slate-700">
+                        <li class="flex justify-between border-b border-amber-100 pb-1.5">
+                            <span class="text-slate-500 font-medium">PIN Code:</span>
+                            <span class="font-bold text-slate-900">577228</span>
+                        </li>
+                        <li class="flex justify-between border-b border-amber-100 pb-1.5">
+                            <span class="text-slate-500 font-medium">Taluk:</span>
+                            <span id="statTaluk" class="font-semibold text-slate-900">Ajjampura / Tarikere</span>
+                        </li>
+                        <li class="flex justify-between border-b border-amber-100 pb-1.5">
+                            <span class="text-slate-500 font-medium">District:</span>
+                            <span id="statDistrict" class="font-semibold text-slate-900">Chikkamagaluru, Karnataka</span>
+                        </li>
+                        <li class="flex justify-between border-b border-amber-100 pb-1.5">
+                            <span class="text-slate-500 font-medium">Main Agriculture:</span>
+                            <span id="statCrops" class="font-semibold text-slate-900">Arecanut, Coconut, Paddy, Ragi</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="text-slate-500 font-medium">Nearest Rly Station:</span>
+                            <span id="statStation" class="font-semibold text-slate-900">Ajjampura / Birur Jn</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SACRED TEMPLES SECTION -->
+        <section id="temples" class="scroll-mt-24">
+            <div class="flex items-center justify-between mb-6 border-b border-amber-200 pb-3">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 font-heading flex items-center gap-2">
+                        <i class="fa-solid fa-place-of-worship text-saffron-600"></i>
+                        Sacred Temples (ದೇವಾಲಯಗಳು)
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-500">Divine Shrines & Spiritual Heritage of Kerehosahalli</p>
+                </div>
+            </div>
+
+            <!-- Temple Cards Container -->
+            <div id="templesGrid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Dynamic Temple cards inserted via JS -->
+            </div>
+        </section>
+
+        <!-- COMMUNITY PHOTO GALLERY SECTION -->
+        <section id="gallery" class="scroll-mt-24">
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-6 border-b border-amber-200 pb-3">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 font-heading flex items-center gap-2">
+                        <i class="fa-solid fa-camera-retro text-saffron-600"></i>
+                        Village & Temple Photo Gallery
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-500">Shared memories by villagers & devotees</p>
+                </div>
+                
+                <!-- Gallery Controls -->
+                <div class="flex items-center space-x-3">
+                    <button onclick="openModal('modalUploadPhoto')" class="bg-saffron-600 hover:bg-saffron-500 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs sm:text-sm shadow-md transition flex items-center space-x-1.5">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <span>Upload Photo</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="mb-4 text-xs text-slate-500 bg-amber-50 border border-amber-200 p-2.5 rounded-lg flex items-center space-x-2">
+                <i class="fa-solid fa-circle-info text-saffron-600"></i>
+                <span>Public visitors can upload photos. Only the site owner/admin can moderate or remove photos.</span>
+            </div>
+
+            <!-- Photos Grid -->
+            <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Gallery items injected via JS -->
+            </div>
+        </section>
+
+        <!-- COMMUNITY BOARD & PRAYER WALL -->
+        <section id="community" class="scroll-mt-24">
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-6 border-b border-amber-200 pb-3">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 font-heading flex items-center gap-2">
+                        <i class="fa-solid fa-comments text-saffron-600"></i>
+                        Community Notice Board & Devotional Messages
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-500">Public greetings, festival announcements & prayers</p>
+                </div>
+
+                <button onclick="openModal('modalAddMessage')" class="bg-maroon-800 hover:bg-maroon-700 text-amber-100 font-bold px-4 py-2 rounded-xl text-xs sm:text-sm shadow-md transition flex items-center space-x-1.5">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <span>Post Message / Prayer</span>
+                </button>
+            </div>
+
+            <div id="messagesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Messages injected via JS -->
+            </div>
+        </section>
+
+        <!-- DYNAMIC CUSTOM SECTIONS CONTAINER (Admin created) -->
+        <div id="customSectionsContainer" class="space-y-16">
+            <!-- Dynamically rendered custom sections -->
+        </div>
+
+        <!-- EMERGENCY & USEFUL CONTACTS -->
+        <section id="contacts" class="scroll-mt-24">
+            <div class="flex items-center justify-between mb-6 border-b border-amber-200 pb-3">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 font-heading flex items-center gap-2">
+                        <i class="fa-solid fa-address-book text-saffron-600"></i>
+                        Key Contacts & Emergency Help
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-500">Useful phone numbers & essential services</p>
+                </div>
+                <button id="editContactsBtn" onclick="openModal('modalEditContacts')" class="hidden bg-amber-100 hover:bg-amber-200 text-amber-900 px-3 py-1.5 rounded-lg text-xs font-bold transition">
+                    <i class="fa-solid fa-pen mr-1"></i> Edit Contacts
+                </button>
+            </div>
+
+            <div id="contactsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Contacts injected via JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-maroon-950 text-amber-200/80 border-t-4 border-saffron-600 py-10 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+            <div class="flex justify-center items-center space-x-2">
+                <i class="fa-solid fa-om text-saffron-500 text-xl"></i>
+                <span class="font-heading font-bold text-amber-100 text-lg">ಕೆರೆಹೊಸಹಳ್ಳಿ | Kerehosahalli</span>
+            </div>
+            <p class="text-xs text-amber-300/70 max-w-xl mx-auto">
+                Official Village Digital Portal (PIN Code: 577228), Ajjampura / Tarikere Taluk, Chikkamagaluru District, Karnataka State.
+            </p>
+            <div class="text-xs text-slate-400 pt-4 border-t border-maroon-800 flex flex-wrap justify-between items-center gap-2">
+                <span>&copy; <span id="yearSpan"></span> Kerehosahalli Village Portal. All rights reserved.</span>
+                <button onclick="openModal('modalAdminLogin')" class="text-amber-400 hover:underline">
+                    Owner Administration Access
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- TOAST NOTIFICATION STACK -->
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 space-y-2 pointer-events-none"></div>
+
+    <!-- MODALS SECTION -->
+
+    <!-- 1. ADMIN LOGIN MODAL -->
+    <div id="modalAdminLogin" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-amber-300 relative transform transition-all">
+            <button onclick="closeModal('modalAdminLogin')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 bg-amber-100 text-saffron-600 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl shadow-inner">
+                    <i class="fa-solid fa-user-lock"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 font-heading">Owner / Admin Authentication</h3>
+                <p class="text-xs text-slate-500">Enter master owner password to enable edit access</p>
+            </div>
+
+            <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Master Password</label>
+                    <input type="password" id="adminPasswordInput" required placeholder="Enter password (default: kerehosahalli577228)" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-saffron-500 text-sm">
+                </div>
+                <button type="submit" class="w-full bg-saffron-600 hover:bg-saffron-500 text-slate-950 font-bold py-3 rounded-xl shadow-lg transition text-sm">
+                    Unlock Owner Controls
+                </button>
+            </form>
+            <p class="text-xs text-slate-400 text-center mt-4">
+                Default Owner Password: <code class="bg-slate-100 px-1 rounded text-slate-700">kerehosahalli577228</code>
+            </p>
+        </div>
+    </div>
+
+    <!-- 2. UPLOAD PHOTO MODAL (PUBLIC & OWNER) -->
+    <div id="modalUploadPhoto" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-amber-300 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('modalUploadPhoto')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-xl font-bold text-slate-900 font-heading mb-1">Upload Photo to Gallery</h3>
+            <p class="text-xs text-slate-500 mb-4">Share pictures of Kerehosahalli temples, nature, or events.</p>
+
+            <form onsubmit="handleUploadPhoto(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Image Source</label>
+                    <select id="photoSourceType" onchange="togglePhotoInputType()" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-saffron-500">
+                        <option value="url">Provide Image URL (Web Link)</option>
+                        <option value="file">Upload Local File from Device</option>
+                    </select>
+                </div>
+
+                <div id="photoUrlContainer">
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Image URL</label>
+                    <input type="url" id="photoUrlInput" placeholder="https://images.unsplash.com/photo-..." class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-saffron-500">
+                </div>
+
+                <div id="photoFileContainer" class="hidden">
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Select File</label>
+                    <input type="file" id="photoFileInput" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-100 file:text-amber-900 hover:file:bg-amber-200">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Title / Caption</label>
+                    <input type="text" id="photoTitleInput" required placeholder="e.g. Jalimaradamma Devi Temple Pooja" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-saffron-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Uploaded By (Your Name)</label>
+                    <input type="text" id="photoUploaderInput" placeholder="Your Name or Villager" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-saffron-500">
+                </div>
+
+                <button type="submit" class="w-full bg-saffron-600 hover:bg-saffron-500 text-slate-950 font-bold py-3 rounded-xl shadow-md transition text-sm">
+                    Publish Photo to Gallery
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 3. ADD COMMUNITY MESSAGE MODAL -->
+    <div id="modalAddMessage" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-amber-300 relative">
+            <button onclick="closeModal('modalAddMessage')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-xl font-bold text-slate-900 font-heading mb-1">Post Devotional Message / Notice</h3>
+            <p class="text-xs text-slate-500 mb-4">Post prayers, wishes, or village notices to the community board.</p>
+
+            <form onsubmit="handleAddMessage(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Category</label>
+                    <select id="msgCategoryInput" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-saffron-500">
+                        <option value="Devotional Prayer">🙏 Devotional Prayer</option>
+                        <option value="Festival Wish">🎉 Festival Wish</option>
+                        <option value="Village Notice">📢 Village Notice</option>
+                        <option value="General">💬 General Community Post</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Your Name</label>
+                    <input type="text" id="msgAuthorInput" required placeholder="e.g. Ramesh K." class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-saffron-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Message Content</label>
+                    <textarea id="msgContentInput" rows="3" required placeholder="Write your message or prayer here..." class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-saffron-500"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-maroon-800 hover:bg-maroon-700 text-amber-100 font-bold py-3 rounded-xl shadow-md transition text-sm">
+                    Submit Message
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 4. OWNER: EDIT BANNER HEADER MODAL -->
+    <div id="modalHeaderEdit" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-amber-500 relative">
+            <button onclick="closeModal('modalHeaderEdit')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-xl font-bold text-slate-900 font-heading mb-4">Edit Hero & Header Text</h3>
+
+            <form onsubmit="handleSaveHeader(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Site Title</label>
+                    <input type="text" id="editSiteTitle" class="w-full px-3 py-2 rounded-lg border text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Site Subtitle / PIN</label>
+                    <input type="text" id="editSiteSubtitle" class="w-full px-3 py-2 rounded-lg border text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Hero Title</label>
+                    <input type="text" id="editHeroTitle" class="w-full px-3 py-2 rounded-lg border text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Hero Description</label>
+                    <textarea id="editHeroSubtitle" rows="3" class="w-full px-3 py-2 rounded-lg border text-sm"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-saffron-600 text-slate-950 font-bold py-2.5 rounded-xl text-sm">
+                    Save Changes
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 5. OWNER: EDIT ANNOUNCEMENT MODAL -->
+    <div id="modalEditAnnouncement" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-amber-500 relative">
+            <button onclick="closeModal('modalEditAnnouncement')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-xl font-bold text-slate-900 font-heading mb-4">Edit Village Announcement Ticker</h3>
+
+            <form onsubmit="handleSaveAnnouncement(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Announcement Text</label>
+                    <textarea id="editAnnouncementInput" rows="3" class="w-full px-3 py-2 rounded-lg border text-sm" required></textarea>
+                </div>
+                <button type="submit" class="w-full bg-saffron-600 text-slate-950 font-bold py-2.5 rounded-xl text-sm">
+                    Update Ticker
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 6. OWNER: EDIT TEMPLE DETAILS MODAL -->
+    <div id="modalEditTemple" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-amber-500 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('modalEditTemple')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-xl font-bold text-slate-900 font-heading mb-4">Edit Temple Information</h3>
+
+            <form onsubmit="handleSaveTemple(event)" class="space-y-4">
+                <input type="hidden" id="editTempleId">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Temple Name</label>
+                    <input type="text" id="editTempleName" required class="w-full px-3 py-2 rounded-lg border text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Deity / Subtitle</label>
+                    <input type="text" id="editTempleDeity" class="w-full px-3 py-2 rounded-lg border text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Image URL</label>
+                    <input type="url" id="editTempleImage" class="w-full px-3 py-2 rounded-lg border text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">History & Description</label>
+                    <textarea id="editTempleDesc" rows="4" class="w-full px-3 py-2 rounded-lg border text-sm"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Pooja Timings / Festival Info</label>
+                    <input type="text" id="editTempleTimings" class="w-full px-3 py-2 rounded-lg border text-sm">
+                </div>
+                <button type="submit" class="w-full bg-saffron-600 text-slate-950 font-bold py-2.5 rounded-xl text-sm">
+                    Save Temple Details
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 7. OWNER: ADD DYNAMIC CUSTOM SECTION MODAL -->
+    <div id="modalAddSection" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-amber-500 relative">
+            <button onclick="closeModal('modalAddSection')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-xl font-bold text-slate-900 font-heading mb-1">Add New Section to Website</h3>
+            <p class="text-xs text-slate-500 mb-4">Create dynamic categories (e.g., School Info, Youth Club, Agriculture Updates).</p>
+
+            <form onsubmit="handleAddCustomSection(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Section Title</label>
+                    <input type="text" id="customSecTitle" required placeholder="e.g. Government Higher Primary School" class="w-full px-3 py-2 rounded-lg border text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Subtitle / Category</label>
+                    <input type="text" id="customSecSubtitle" placeholder="e.g. Education & Youth" class="w-full px-3 py-2 rounded-lg border text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Content / Details</label>
+                    <textarea id="customSecContent" rows="4" required placeholder="Enter complete details for this section..." class="w-full px-3 py-2 rounded-lg border text-sm"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-amber-600 text-slate-950 font-bold py-2.5 rounded-xl text-sm">
+                    Create Section
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 8. OWNER: CHANGE ADMIN PASSWORD MODAL -->
+    <div id="modalChangePassword" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-amber-500 relative">
+            <button onclick="closeModal('modalChangePassword')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-xl font-bold text-slate-900 font-heading mb-4">Change Owner Password</h3>
+
+            <form onsubmit="handleChangePassword(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">New Password</label>
+                    <input type="password" id="newPassInput" required minlength="6" placeholder="Enter new password" class="w-full px-3 py-2 rounded-lg border text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Confirm New Password</label>
+                    <input type="password" id="confirmPassInput" required minlength="6" placeholder="Re-enter password" class="w-full px-3 py-2 rounded-lg border text-sm">
+                </div>
+                <button type="submit" class="w-full bg-saffron-600 text-slate-950 font-bold py-2.5 rounded-xl text-sm">
+                    Update Password
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 9. OWNER: EDIT ABOUT SECTION MODAL -->
+    <div id="modalEditAbout" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-amber-500 relative">
+            <button onclick="closeModal('modalEditAbout')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-xl font-bold text-slate-900 font-heading mb-4">Edit About Village Text</h3>
+
+            <form onsubmit="handleSaveAbout(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Description</label>
+                    <textarea id="editAboutText" rows="5" required class="w-full px-3 py-2 rounded-lg border text-sm"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Main Crops</label>
+                    <input type="text" id="editCropsText" required class="w-full px-3 py-2 rounded-lg border text-sm">
+                </div>
+                <button type="submit" class="w-full bg-saffron-600 text-slate-950 font-bold py-2.5 rounded-xl text-sm">
+                    Save Village Info
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- APPLICATION LOGIC & STATE MANAGEMENT -->
+    <script>
+        // LOCAL STORAGE KEY
+        const STORAGE_KEY = 'kerehosahalli_portal_v1';
+
+        // DEFAULT STATE FOR KEREHOSAHALLI (PIN: 577228)
+        const defaultState = {
+            adminPass: 'kerehosahalli577228',
+            siteTitle: 'ಕೆರೆಹೊಸಹಳ್ಳಿ | Kerehosahalli',
+            siteSubtitle: 'Ajjampura / Tarikere Taluk | PIN: 577228',
+            heroTitle: 'Kerehosahalli Village Portal',
+            heroSubtitle: 'Welcome to our serene village in Chikkamagaluru district (PIN: 577228). Home to revered shrines, lush agricultural fields, and a proud cultural heritage.',
+            announcement: '🚩 Upcoming Annual Shree Jalimaradamma Devi Jatre preparations underway! All villagers & devotees are cordially invited.',
+            diyaCount: 142,
+            aboutText: 'Kerehosahalli is a historic and peaceful village situated in the Ajjampura / Tarikere Taluk region of Chikkamagaluru district, Karnataka (PIN Code: 577228). Surrounded by scenic greenery, the village is renowned for its spiritual harmony, sacred temples, and hardworking agrarian community.',
+            cropsText: 'Arecanut, Coconut, Paddy, Ragi & Vegetables',
+            temples: [
+                {
+                    id: 'temple_1',
+                    name: 'Shree Jalimaradamma Devi Temple (ಶ್ರೀ ಜಲಿಮರದಮ್ಮ ದೇವಿ ದೇವಾಲಯ)',
+                    deity: 'Goddess Jalimaradamma Devi (Gramadevathi)',
+                    image: 'https://images.unsplash.com/photo-1609946850882-e3a531f82e05?auto=format&fit=crop&q=80&w=800',
+                    history: 'Shree Jalimaradamma Devi is the Gramadevathi (protecting deity) of Kerehosahalli. Devotees from surrounding villages gather here seeking divine protection, health, and prosperity. The annual Jatre festival is celebrated with grand poojas, prasadam distribution, and traditional lights.',
+                    timings: 'Morning: 6:00 AM - 12:30 PM | Evening: 5:30 PM - 8:30 PM'
+                },
+                {
+                    id: 'temple_2',
+                    name: 'Shree Bhutheshwara Swami Temple (ಶ್ರೀ ಭೂತೇಶ್ವರ ಸ್ವಾಮಿ ದೇವಾಲಯ)',
+                    deity: 'Lord Bhutheshwara Swami (Lord Shiva)',
+                    image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800',
+                    history: 'Shree Bhutheshwara Swami temple stands as an ancient spiritual sanctuary in Kerehosahalli. Special Abhisheka and Rudrabhisheka are performed during Maha Shivaratri and Mondays. The temple ambience fills devotees with deep inner peace.',
+                    timings: 'Morning: 6:30 AM - 12:00 PM | Evening: 5:00 PM - 8:00 PM'
+                }
+            ],
+            gallery: [
+                {
+                    id: 'gal_1',
+                    title: 'Shree Jalimaradamma Devi Temple Entrance',
+                    url: 'https://images.unsplash.com/photo-1609946850882-e3a531f82e05?auto=format&fit=crop&q=80&w=800',
+                    uploader: 'Admin / Owner',
+                    date: '2026-01-10'
+                },
+                {
+                    id: 'gal_2',
+                    title: 'Green Arecanut Plantations of Kerehosahalli',
+                    url: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=800',
+                    uploader: 'Villager',
+                    date: '2026-02-01'
+                },
+                {
+                    id: 'gal_3',
+                    title: 'Village Sunrise & Morning Calm',
+                    url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=800',
+                    uploader: 'Devotee',
+                    date: '2026-02-14'
+                }
+            ],
+            messages: [
+                {
+                    id: 'msg_1',
+                    category: 'Devotional Prayer',
+                    author: 'Suresh Kumar & Family',
+                    content: 'May Shree Jalimaradamma Devi bless all villagers of Kerehosahalli with good health and prosperous crops this year! 🚩',
+                    date: '2026-03-01'
+                },
+                {
+                    id: 'msg_2',
+                    category: 'Village Notice',
+                    author: 'Panchayat Committee',
+                    content: 'Cleanliness drive scheduled for coming Sunday morning near the temple pond. All youth are requested to participate.',
+                    date: '2026-03-04'
+                }
+            ],
+            contacts: [
+                { title: 'Village Panchayat Office', number: '+91 94800 00000', icon: 'fa-building-columns' },
+                { title: 'Post Office (PIN 577228)', number: '08261-240000', icon: 'fa-envelope' },
+                { title: 'Primary Health Clinic (PHC)', number: '+91 94480 12345', icon: 'fa-hospital' },
+                { title: 'KEB Electricity Board Helplines', number: '1912 / 1800-425', icon: 'fa-bolt' }
+            ],
+            customSections: []
+        };
+
+        // CURRENT RUNTIME STATE
+        let appState = loadState();
+        let isAdminLoggedIn = false;
+
+        // LOAD STATE FROM LOCALSTORAGE
+        function loadState() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    return { ...defaultState, ...JSON.parse(saved) };
+                }
+            } catch (e) {
+                console.error('Error loading state from localStorage', e);
+            }
+            return { ...defaultState };
+        }
+
+        // SAVE STATE TO LOCALSTORAGE
+        function saveState() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+            } catch (e) {
+                console.error('Error saving state to localStorage', e);
+            }
+            renderAll();
+        }
+
+        // INITIALIZATION
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('yearSpan').textContent = new Date().getFullYear();
+            renderAll();
+        });
+
+        // MASTER RENDER FUNCTION
+        function renderAll() {
+            // Render Headers & Text
+            document.getElementById('navTitle').textContent = appState.siteTitle;
+            document.getElementById('navSubtitle').textContent = appState.siteSubtitle;
+            document.getElementById('heroTitle').textContent = appState.heroTitle;
+            document.getElementById('heroSubtitle').textContent = appState.heroSubtitle;
+            document.getElementById('announcementText').textContent = appState.announcement;
+            document.getElementById('diyaCounter').textContent = appState.diyaCount.toLocaleString();
+
+            document.getElementById('aboutDescription').innerHTML = `<p>${appState.aboutText}</p>`;
+            document.getElementById('statCrops').textContent = appState.cropsText;
+
+            // Render Temples Grid
+            const templesGrid = document.getElementById('templesGrid');
+            templesGrid.innerHTML = appState.temples.map(t => `
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md border border-amber-100 hover:shadow-xl transition flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-56 overflow-hidden bg-amber-900">
+                            <img src="${t.image}" alt="${t.name}" class="w-full h-full object-cover transition transform hover:scale-105 duration-500" onerror="this.src='https://placehold.co/800x500/701a1e/f59e0b?text=Temple+Photo'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-3 left-4 right-4">
+                                <span class="bg-saffron-600 text-slate-950 text-xs font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                                    ${t.deity}
+                                </span>
+                            </div>
+                            ${isAdminLoggedIn ? `
+                                <button onclick="openEditTemple('${t.id}')" class="absolute top-3 right-3 bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg">
+                                    <i class="fa-solid fa-pen mr-1"></i> Edit Temple
+                                </button>
+                            ` : ''}
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-slate-900 font-heading mb-2">${t.name}</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-4">${t.history}</p>
+                        </div>
+                    </div>
+                    <div class="bg-amber-50 px-6 py-3 border-t border-amber-100 text-xs font-medium text-amber-900 flex items-center justify-between">
+                        <span><i class="fa-regular fa-clock mr-1 text-saffron-600"></i> ${t.timings}</span>
+                        <button onclick="lightDiya()" class="text-saffron-700 font-bold hover:underline">Light Diya 🪔</button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Render Gallery Grid
+            const galleryGrid = document.getElementById('galleryGrid');
+            galleryGrid.innerHTML = appState.gallery.map(img => `
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-amber-100 relative group flex flex-col justify-between">
+                    <div class="relative h-48 overflow-hidden bg-slate-100">
+                        <img src="${img.url}" alt="${img.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://placehold.co/600x400/fff9eb/92400e?text=Village+Gallery'">
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold text-slate-800 text-sm mb-1">${img.title}</h4>
+                        <div class="flex justify-between items-center text-xs text-slate-400">
+                            <span>By: ${img.uploader}</span>
+                            <span>${img.date}</span>
+                        </div>
+                    </div>
+                    ${isAdminLoggedIn ? `
+                        <button onclick="deleteGalleryPhoto('${img.id}')" class="m-2 bg-red-600 hover:bg-red-500 text-white text-xs font-bold py-1 px-3 rounded-lg shadow transition">
+                            <i class="fa-solid fa-trash mr-1"></i> Admin Delete
+                        </button>
+                    ` : ''}
+                </div>
+            `).join('');
+
+            // Render Messages Grid
+            const messagesGrid = document.getElementById('messagesGrid');
+            messagesGrid.innerHTML = appState.messages.map(m => `
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-amber-200/80 relative flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full ${
+                                m.category === 'Devotional Prayer' ? 'bg-amber-100 text-amber-900' :
+                                m.category === 'Village Notice' ? 'bg-red-100 text-red-900' : 'bg-blue-100 text-blue-900'
+                            }">
+                                ${m.category}
+                            </span>
+                            <span class="text-xs text-slate-400">${m.date}</span>
+                        </div>
+                        <p class="text-slate-700 text-sm leading-relaxed mb-4 font-medium">${m.content}</p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex justify-between items-center">
+                        <span class="text-xs font-bold text-slate-600">— ${m.author}</span>
+                        ${isAdminLoggedIn ? `
+                            <button onclick="deleteMessage('${m.id}')" class="text-xs text-red-600 hover:text-red-800 font-bold">
+                                <i class="fa-solid fa-trash mr-1"></i> Delete
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+
+            // Render Contacts Grid
+            const contactsGrid = document.getElementById('contactsGrid');
+            contactsGrid.innerHTML = appState.contacts.map(c => `
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-amber-100 flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-lg bg-amber-100 text-saffron-700 flex items-center justify-center text-lg">
+                        <i class="fa-solid ${c.icon}"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-500">${c.title}</div>
+                        <div class="text-sm font-bold text-slate-800">${c.number}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Render Custom Sections
+            const customSecContainer = document.getElementById('customSectionsContainer');
+            customSecContainer.innerHTML = appState.customSections.map(s => `
+                <section class="scroll-mt-24">
+                    <div class="flex items-center justify-between mb-4 border-b border-amber-200 pb-3">
+                        <div>
+                            <span class="text-xs uppercase font-bold text-saffron-600 tracking-wider">${s.subtitle || 'Custom Section'}</span>
+                            <h2 class="text-2xl font-bold text-slate-900 font-heading">${s.title}</h2>
+                        </div>
+                        ${isAdminLoggedIn ? `
+                            <button onclick="deleteCustomSection('${s.id}')" class="bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg">
+                                <i class="fa-solid fa-trash mr-1"></i> Remove Section
+                            </button>
+                        ` : ''}
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-amber-100 text-slate-700 text-sm leading-relaxed">
+                        ${s.content}
+                    </div>
+                </section>
+            `).join('');
+
+            // Toggle Admin View Elements
+            const adminBar = document.getElementById('adminTopBar');
+            const editAnnounce = document.getElementById('editAnnouncementBtn');
+            const editAbout = document.getElementById('editAboutBtn');
+            const editContacts = document.getElementById('editContactsBtn');
+            const authContainer = document.getElementById('authBtnContainer');
+
+            if (isAdminLoggedIn) {
+                adminBar.classList.remove('hidden');
+                adminBar.classList.add('flex');
+                editAnnounce.classList.remove('hidden');
+                editAbout.classList.remove('hidden');
+                editContacts.classList.remove('hidden');
+
+                authContainer.innerHTML = `
+                    <button onclick="adminLogout()" class="bg-red-700 hover:bg-red-600 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow transition flex items-center space-x-1">
+                        <i class="fa-solid fa-lock"></i>
+                        <span>Exit Admin</span>
+                    </button>
+                `;
+            } else {
+                adminBar.classList.add('hidden');
+                adminBar.classList.remove('flex');
+                editAnnounce.classList.add('hidden');
+                editAbout.classList.add('hidden');
+                editContacts.classList.add('hidden');
+
+                authContainer.innerHTML = `
+                    <button onclick="openModal('modalAdminLogin')" class="bg-saffron-600 hover:bg-saffron-500 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs sm:text-sm shadow-md transition flex items-center space-x-1.5">
+                        <i class="fa-solid fa-user-shield"></i>
+                        <span>Owner Login</span>
+                    </button>
+                `;
+            }
+        }
+
+        // VIRTUAL DIYA LIGHTING ACTION (PUBLIC & OWNER)
+        function lightDiya() {
+            appState.diyaCount += 1;
+            saveState();
+            showToast('🪔 Diya Offered! May Shree Jalimaradamma Devi & Shree Bhutheshwara Swami bless you!');
+        }
+
+        // AUTHENTICATION HANDLERS
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const inputPass = document.getElementById('adminPasswordInput').value.trim();
+            if (inputPass === appState.adminPass) {
+                isAdminLoggedIn = true;
+                closeModal('modalAdminLogin');
+                document.getElementById('adminPasswordInput').value = '';
+                showToast('🔑 Master Admin Authenticated successfully!');
+                renderAll();
+            } else {
+                showToast('❌ Incorrect Admin Password!', 'error');
+            }
+        }
+
+        function adminLogout() {
+            isAdminLoggedIn = false;
+            showToast('🔒 Logged out of Owner / Admin mode.');
+            renderAll();
+        }
+
+        function handleChangePassword(e) {
+            e.preventDefault();
+            if (!isAdminLoggedIn) return;
+            const newP = document.getElementById('newPassInput').value;
+            const confP = document.getElementById('confirmPassInput').value;
+
+            if (newP !== confP) {
+                showToast('❌ Passwords do not match!', 'error');
+                return;
+            }
+
+            appState.adminPass = newP;
+            saveState();
+            closeModal('modalChangePassword');
+            document.getElementById('newPassInput').value = '';
+            document.getElementById('confirmPassInput').value = '';
+            showToast('✅ Admin password updated successfully!');
+        }
+
+        // PUBLIC / OWNER PHOTO UPLOAD HANDLER
+        function togglePhotoInputType() {
+            const type = document.getElementById('photoSourceType').value;
+            if (type === 'url') {
+                document.getElementById('photoUrlContainer').classList.remove('hidden');
+                document.getElementById('photoFileContainer').classList.add('hidden');
+            } else {
+                document.getElementById('photoUrlContainer').classList.add('hidden');
+                document.getElementById('photoFileContainer').classList.remove('hidden');
+            }
+        }
+
+        function handleUploadPhoto(e) {
+            e.preventDefault();
+            const title = document.getElementById('photoTitleInput').value.trim();
+            const uploader = document.getElementById('photoUploaderInput').value.trim() || 'Devotee / Villager';
+            const sourceType = document.getElementById('photoSourceType').value;
+
+            const savePhotoObject = (url) => {
+                const newImg = {
+                    id: 'gal_' + Date.now(),
+                    title: title,
+                    url: url,
+                    uploader: uploader,
+                    date: new Date().toISOString().split('T')[0]
+                };
+                appState.gallery.unshift(newImg);
+                saveState();
+                closeModal('modalUploadPhoto');
+                document.getElementById('photoTitleInput').value = '';
+                document.getElementById('photoUrlInput').value = '';
+                document.getElementById('photoFileInput').value = '';
+                showToast('🖼️ Photo published to community gallery!');
+            };
+
+            if (sourceType === 'url') {
+                const url = document.getElementById('photoUrlInput').value.trim() || 'https://images.unsplash.com/photo-1609946850882-e3a531f82e05?auto=format&fit=crop&q=80&w=800';
+                savePhotoObject(url);
+            } else {
+                const fileInput = document.getElementById('photoFileInput');
+                if (fileInput.files && fileInput.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(evt) {
+                        savePhotoObject(evt.target.result);
+                    };
+                    reader.readAsDataURL(fileInput.files[0]);
+                } else {
+                    showToast('Please select a file first!', 'error');
+                }
+            }
+        }
+
+        function deleteGalleryPhoto(id) {
+            if (!isAdminLoggedIn) return;
+            appState.gallery = appState.gallery.filter(g => g.id !== id);
+            saveState();
+            showToast('🗑️ Photo removed by admin.');
+        }
+
+        // PUBLIC MESSAGE POSTING HANDLER
+        function handleAddMessage(e) {
+            e.preventDefault();
+            const category = document.getElementById('msgCategoryInput').value;
+            const author = document.getElementById('msgAuthorInput').value.trim();
+            const content = document.getElementById('msgContentInput').value.trim();
+
+            const newMsg = {
+                id: 'msg_' + Date.now(),
+                category: category,
+                author: author,
+                content: content,
+                date: new Date().toISOString().split('T')[0]
+            };
+
+            appState.messages.unshift(newMsg);
+            saveState();
+            closeModal('modalAddMessage');
+            document.getElementById('msgAuthorInput').value = '';
+            document.getElementById('msgContentInput').value = '';
+            showToast('💬 Message posted to community board!');
+        }
+
+        function deleteMessage(id) {
+            if (!isAdminLoggedIn) return;
+            appState.messages = appState.messages.filter(m => m.id !== id);
+            saveState();
+            showToast('🗑️ Message deleted.');
+        }
+
+        // OWNER HEADER EDIT HANDLER
+        function handleSaveHeader(e) {
+            e.preventDefault();
+            if (!isAdminLoggedIn) return;
+            appState.siteTitle = document.getElementById('editSiteTitle').value;
+            appState.siteSubtitle = document.getElementById('editSiteSubtitle').value;
+            appState.heroTitle = document.getElementById('editHeroTitle').value;
+            appState.heroSubtitle = document.getElementById('editHeroSubtitle').value;
+            saveState();
+            closeModal('modalHeaderEdit');
+            showToast('✅ Header details updated!');
+        }
+
+        // OWNER ANNOUNCEMENT EDIT HANDLER
+        function handleSaveAnnouncement(e) {
+            e.preventDefault();
+            if (!isAdminLoggedIn) return;
+            appState.announcement = document.getElementById('editAnnouncementInput').value;
+            saveState();
+            closeModal('modalEditAnnouncement');
+            showToast('📢 Ticker announcement updated!');
+        }
+
+        // OWNER ABOUT SECTION EDIT
+        function handleSaveAbout(e) {
+            e.preventDefault();
+            if (!isAdminLoggedIn) return;
+            appState.aboutText = document.getElementById('editAboutText').value;
+            appState.cropsText = document.getElementById('editCropsText').value;
+            saveState();
+            closeModal('modalEditAbout');
+            showToast('✅ Village info updated!');
+        }
+
+        // OWNER TEMPLE EDIT
+        function openEditTemple(id) {
+            if (!isAdminLoggedIn) return;
+            const t = appState.temples.find(x => x.id === id);
+            if (!t) return;
+            document.getElementById('editTempleId').value = t.id;
+            document.getElementById('editTempleName').value = t.name;
+            document.getElementById('editTempleDeity').value = t.deity;
+            document.getElementById('editTempleImage').value = t.image;
+            document.getElementById('editTempleDesc').value = t.history;
+            document.getElementById('editTempleTimings').value = t.timings;
+            openModal('modalEditTemple');
+        }
+
+        function handleSaveTemple(e) {
+            e.preventDefault();
+            if (!isAdminLoggedIn) return;
+            const id = document.getElementById('editTempleId').value;
+            const idx = appState.temples.findIndex(x => x.id === id);
+            if (idx !== -1) {
+                appState.temples[idx] = {
+                    id: id,
+                    name: document.getElementById('editTempleName').value,
+                    deity: document.getElementById('editTempleDeity').value,
+                    image: document.getElementById('editTempleImage').value,
+                    history: document.getElementById('editTempleDesc').value,
+                    timings: document.getElementById('editTempleTimings').value
+                };
+                saveState();
+                closeModal('modalEditTemple');
+                showToast('✅ Temple details updated!');
+            }
+        }
+
+        // OWNER ADD DYNAMIC CUSTOM SECTION
+        function handleAddCustomSection(e) {
+            e.preventDefault();
+            if (!isAdminLoggedIn) return;
+            const title = document.getElementById('customSecTitle').value.trim();
+            const subtitle = document.getElementById('customSecSubtitle').value.trim();
+            const content = document.getElementById('customSecContent').value.trim();
+
+            appState.customSections.push({
+                id: 'sec_' + Date.now(),
+                title: title,
+                subtitle: subtitle,
+                content: content
+            });
+
+            saveState();
+            closeModal('modalAddSection');
+            document.getElementById('customSecTitle').value = '';
+            document.getElementById('customSecSubtitle').value = '';
+            document.getElementById('customSecContent').value = '';
+            showToast('➕ New section added to website!');
+        }
+
+        function deleteCustomSection(id) {
+            if (!isAdminLoggedIn) return;
+            appState.customSections = appState.customSections.filter(s => s.id !== id);
+            saveState();
+            showToast('🗑️ Custom section removed.');
+        }
+
+        // MODAL UTILITIES
+        function openModal(id) {
+            // Populate edit inputs when opening
+            if (id === 'modalHeaderEdit') {
+                document.getElementById('editSiteTitle').value = appState.siteTitle;
+                document.getElementById('editSiteSubtitle').value = appState.siteSubtitle;
+                document.getElementById('editHeroTitle').value = appState.heroTitle;
+                document.getElementById('editHeroSubtitle').value = appState.heroSubtitle;
+            } else if (id === 'modalEditAnnouncement') {
+                document.getElementById('editAnnouncementInput').value = appState.announcement;
+            } else if (id === 'modalEditAbout') {
+                document.getElementById('editAboutText').value = appState.aboutText;
+                document.getElementById('editCropsText').value = appState.cropsText;
+            }
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // CUSTOM TOAST NOTIFICATION SYSTEM (No alert calls)
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `pointer-events-auto px-4 py-3 rounded-xl shadow-2xl text-xs sm:text-sm font-semibold flex items-center space-x-2 transition transform translate-y-2 opacity-0 duration-300 ${
+                type === 'error' ? 'bg-red-800 text-white border border-red-500' : 'bg-slate-900 text-amber-300 border border-amber-500/50'
+            }`;
+            toast.innerHTML = `<span>${message}</span>`;
+            
+            container.appendChild(toast);
+
+            // Animate in
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            // Auto dismiss after 3.5 seconds
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
